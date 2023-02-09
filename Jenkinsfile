@@ -1,31 +1,46 @@
 pipeline {
-  agent any
-  options {
-    buildDiscarder(logRotator(numToKeepStr: '5'))
-  }
-  environment {
-    DOCKERHUB_CREDENTIALS = credentials('amritdocker')
-  }
-  stages {
-    stage('Build') {
-      steps {
-        sh 'docker build -t amritbm/jenkins-docker-hub:cicdv1 .'
-      }
+    agent any
+
+    environment {
+        DOCKER_ID = credentials('DOCKER_ID')
+        DOCKER_PASSWORD = credentials('DOCKER_PASSWORD')
     }
-    stage('Login') {
-      steps {
-        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-      }
+
+    stages {
+        stage('Init') {
+            steps {
+                echo 'Initializing..'
+                echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
+                echo "Current branch: ${env.BRANCH_NAME}"
+                sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_ID --password-stdin'
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Building image..'
+                sh 'docker build -t $DOCKER_ID/test:latest .'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing..'
+                sh 'docker run --rm -e CI=true $DOCKER_ID/test pytest'
+            }
+        }
+        stage('Publish') {
+            steps {
+                echo 'Publishing image to DockerHub..'
+                sh 'docker push $DOCKER_ID/test:latest'
+            }
+        }
+        // stage('Cleanup') {
+        //     steps {
+        //         echo 'Removing unused docker containers and images..'
+        //         sh 'docker ps -aq | xargs --no-run-if-empty docker rm'
+                // keep intermediate images as cache, only delete the final image
+        //         sh 'docker images -q | xargs --no-run-if-empty docker rmi'
+        //     }
+        // }
     }
-    stage('Push') {
-      steps {
-        sh 'docker push amritbm/test1:cicdv1'
-      }
-    }
-  }
-  post {
-    always {
-      sh 'docker logout'
-    }
-  }
 }
+
