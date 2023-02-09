@@ -10,8 +10,10 @@ pipeline {
         stage('Init') {
             steps {
                 echo 'Initializing..'
-                echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
-                echo "Current branch: ${env.BRANCH_NAME}"
+                // echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
+                // echo "Current branch: ${env.BRANCH_NAME}"
+                echo "Running test on JENKINS_URL"
+                echo "Current branch: env.BRANCH_NAME"
                 sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_ID --password-stdin'
             }
         }
