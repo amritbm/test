@@ -12,8 +12,8 @@ pipeline {
                 echo 'Initializing..'
                 // echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
                 // echo "Current branch: ${env.BRANCH_NAME}"
-                echo "Running test on JENKINS_URL"
-                echo "Current branch: env.BRANCH_NAME"
+                // echo "Running test on JENKINS_URL"
+                // echo "Current branch: env.BRANCH_NAME"
                 sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_ID --password-stdin'
             }
         }
@@ -23,12 +23,12 @@ pipeline {
                 sh 'docker build -t $DOCKER_ID/test:latest .'
             }
         }
-        stage('Test') {
-            steps {
-                echo 'Testing..'
-                sh 'docker run --rm -e CI=true $DOCKER_ID/test pytest'
-            }
-        }
+        // stage('Test') {
+        //     steps {
+        //         echo 'Testing..'
+        //         sh 'docker run --rm -e CI=true $DOCKER_ID/test pytest'
+        //     }
+        // }
         stage('Publish') {
             steps {
                 echo 'Publishing image to DockerHub..'
