@@ -9,6 +9,7 @@ pipeline {
           def dockerfile = findFiles(glob: 'dockerfile').get(0)
 
           // Check if Dockerfile exists
+          echo "in biuild function"
           if (dockerfile != null) {
             // Build Docker image
             docker.build("my-python-app:${env.BRANCH_NAME}")
@@ -20,16 +21,16 @@ pipeline {
       }
     }
 
-    stage('Test') {
-      steps {
-        // Run tests here
-      }
-    }
+    // stage('Test') {
+    //   steps {
+    //     // Run tests here
+    //   }
+    // }
 
-    stage('Deploy') {
-      steps {
-        // Deploy to production here
-      }
-    }
+    // stage('Deploy') {
+    //   steps {
+    //     // Deploy to production here
+    //   }
+    // }
   }
 }
