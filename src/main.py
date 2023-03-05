@@ -9,6 +9,6 @@ ENV_VAR = os.getenv('ENV_VAR')
 def run_me():
     """test"""
 
-    print("It is running")
+    print("It is running FINE")
     print(ENV_VAR)
     print("end")
