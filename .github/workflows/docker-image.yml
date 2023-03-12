@@ -32,9 +32,11 @@ jobs:
 #           username: ${{ amritbm }}
 #           password: ${{ Amr!t1998r@njanbm }}
 #            username: ${{ env.DOCKER_USERNAME }}
-#            password: ${{ env.DOCKER_PASSWORD }}
-            username: ${{ secrets.test_env.DOCKER_USERNAME_A }}
-            password: ${{ secrets.test_env.DOCKER_PASSWORD_A }}
+# #            password: ${{ env.DOCKER_PASSWORD }}
+#             username: ${{ secrets.test_env.DOCKER_USERNAME_A }}
+#             password: ${{ secrets.test_env.DOCKER_PASSWORD_A }}
+            username: ${{ secrets.DOCKER_USERNAME_B }}
+            password: ${{ secrets.DOCKER_PASSWORD_B }}
 #            run: echo ${{secrets.DOCKER_PASSWORD}} | sed 's/./& /g'
 
 
