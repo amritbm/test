@@ -9,6 +9,12 @@ on:
 # env:
 #   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
 #   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+# env:
+#     MY_ENV_VAR: ${{ secrets.test_env.MY_ENV_VAR }}
+# steps:
+#   name: Show environment variables
+#   run: echo "MY_ENV_VAR is $MY_ENV_VAR"
+
 
 jobs:
   build-and-push:
@@ -21,13 +27,13 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@v1
         with:
-            run: echo ${{secrets.DOCKER_PASSWORD_A}} | sed 's/./& /g'
+            run: echo ${{secrets.test_env.DOCKER_PASSWORD_A}} | 'show env'
 #           username: ${{ amritbm }}
 #           password: ${{ Amr!t1998r@njanbm }}
 #            username: ${{ env.DOCKER_USERNAME }}
 #            password: ${{ env.DOCKER_PASSWORD }}
-            username: ${{ secrets.DOCKER_USERNAME_A }}
-            password: ${{ secrets.DOCKER_PASSWORD_A }}
+            username: ${{ secrets.test_env.DOCKER_USERNAME_A }}
+            password: ${{ secrets.test_env.DOCKER_PASSWORD_A }}
 #            run: echo ${{secrets.DOCKER_PASSWORD}} | sed 's/./& /g'
 
 
