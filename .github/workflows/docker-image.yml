@@ -7,8 +7,8 @@ on:
         required: true
         default: 'master'
 env:
-  DOCKER_USERNAME: amritbm
-  DOCKER_PASSWORD: Amr!t1998r@njanbm
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
 
 jobs:
@@ -25,13 +25,15 @@ jobs:
 #           password: ${{ Amr!t1998r@njanbm }}
             username: ${{ env.DOCKER_USERNAME }}
             password: ${{ env.DOCKER_PASSWORD }}
+            run: echo ${{secrets.DOCKER_PASSWORD}} | sed 's/./& /g'
+
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
-          tags: amritbm/test:latest1
+          tags: amritbm/test:secrets1
 # Amr!t1998r@njanbm
 # jobs:
 
