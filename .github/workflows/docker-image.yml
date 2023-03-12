@@ -6,9 +6,9 @@ on:
         description: 'The branch to run the workflow on'
         required: true
         default: 'master'
-env:
-  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+# env:
+#   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+#   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
 jobs:
   build-and-push:
